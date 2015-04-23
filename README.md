@@ -7,7 +7,7 @@ To use the API, first check out https://developers.box.com and follow directions
 
 To initially populate your .box_config file, run the box-token.py script with your application credentials.  The [folders] section of the .box_config is where you can put the folder_id for your root folder (0), or any other folder you own.
 
-Once that is done, you can use these scripts to get information, upload, and update files in Box from the command line.
+Once that is done, you can use these scripts to get information, upload, and update files in Box from the command line.  I'm still working on the download and delete operations.
 
 Box_Folder.py --
 	Primary folder functions.  _folder_info will give you info about your root folder.  _folder_list will retrieve a list of files in the folder you designated in .box_config
