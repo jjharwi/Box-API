@@ -5,16 +5,18 @@ import requests
 from ConfigParser import SafeConfigParser
 import time
 
-#To get the initial access token, enter the following URL in your browser and copy the 
-#last value returned in the URL "code=THISTHING" then feed it into the script
+cp = SafeConfigParser()
+cp.read('.box_config')
+client_id = cp.get('application','client_id').strip()
+client_secret = cp.get('application','client_secret').strip()
 
-#https://racker.app.box.com/api/oauth2/authorize?response_type=code&client_id=SOMETHING&state=security_token%SOMETHINGELSE
+print 'Click here to authorize: https://racker.app.box.com/api/oauth2/authorize?response_type=code&client_id={0}&state=security_token%{1}'.format(client_id,client_secret)
 
-access_token = raw_input('Enter the security code: ')
+access_token = raw_input('Enter the security code (end of the URL that pops up): ')
 
 url = 'https://app.box.com/api/oauth2/token'
 
-data = {'grant_type':'authorization_code','code':access_token,'client_id':'SOMETHING','client_secret':'SOMETHINGELSE'}
+data = {'grant_type':'authorization_code','code':access_token,'client_id':client_id,'client_secret':client_secret}
 
 api_key = requests.post(url,data=data)
 
@@ -32,7 +34,7 @@ cp.add_section('tokens')
 cp.set('tokens','access_token',access_token)
 cp.set('tokens','expire_time',str(expire_time))
 cp.set('tokens','refresh_token',refresh_token)
-fp = open('.box_config','w+')
+fp = open('.box_config','a')
 cp.write(fp)
 fp.close()
 

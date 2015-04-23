@@ -10,9 +10,11 @@ def _refresh_token():
     cp = SafeConfigParser()
     cp.read('.box_config')
     refresh_token = cp.get('tokens','refresh_token').strip()
+    client_id = cp.get('application','client_id').strip()
+    client_secret = cp.get('application','client_secret').strip()
 
     url = 'https://app.box.com/api/oauth2/token'
-    refresh_data = {'grant_type':'refresh_token','refresh_token':refresh_token,'client_id':'SANITIZED','client_secret':'SANITIZED'}
+    refresh_data = {'grant_type':'refresh_token','refresh_token':refresh_token,'client_id':client_id,'client_secret':client_secret}
 
     api_key = requests.post(url,data=refresh_data)
     api_token = json.loads(api_key.text)

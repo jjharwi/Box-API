@@ -3,9 +3,13 @@ Box-API
 
 Scripts and documentation for interacting with the Box API
 
-To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created (hint: https://racker.app.box.com/developers/services/edit/), you can put the client_id and client_secret in the box-token.py script and generate access and refresh tokens.  The Box_Refresh function will then be used by the other functions here and fetch you a new set of tokens whenever needed.
+To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created (hint: https://racker.app.box.com/developers/services/edit/), put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
 
-To initially populate your .box_config file, run the box-token.py script with your application credentials.  The [folders] section of the .box_config is where you can put the folder_id for your root folder (0), or any other folder you own.
+Run box-token.py to create the tokens section and populate your initial access and refresh tokens.  It will present you with the proper URL to access your application, just open the URL and authenticate with your RSA token (use the Single Sign On link).  Then, click the "Grant access to Box" button. You will be presented with a URL in your browser that has "code=LONGSTRINGOFSTUFF" at the end.  Copy/paste the LONGSTRINGOFSTUFF into the script.  
+ 
+The Box_Refresh function will then be used by the other functions here and fetch you a new set of tokens whenever needed.  
+
+At this point, if you have a particular folder you want to upload to, put it in the .box_config.  The [folders] section of the .box_config is where you need to put the folder_id for your root folder (0), or any other folder you own.  An example of how it should look is in box_config.ex
 
 Once that is done, you can use these scripts to get information, upload, and update files in Box from the command line.  I'm still working on the download and delete operations.
 
