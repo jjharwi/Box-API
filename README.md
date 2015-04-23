@@ -5,7 +5,7 @@ Scripts and documentation for interacting with the Box API
 
 To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created (hint: https://racker.app.box.com/developers/services/edit/), you can put the client_id and client_secret in the box-token.py script and generate access and refresh tokens.  The Box_Refresh function will then be used by the other functions here and fetch you a new set of tokens whenever needed.
 
-To initially populate your .box_config file, run the box-token.py script with your application credentials.  The [folders] section of the .box_config is where you can put the folder_id for your root folder, or some folder you own.
+To initially populate your .box_config file, run the box-token.py script with your application credentials.  The [folders] section of the .box_config is where you can put the folder_id for your root folder (0), or any other folder you own.
 
 Once that is done, you can use these scripts to get information, upload, and update files in Box from the command line.
 
