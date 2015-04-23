@@ -22,8 +22,12 @@ if filename in folder_list:
     update_info = Box_File._file_update(filename,file_id)
     if '20' in str(update_info):
         print 'File {0} was updated in Box.'.format(filename)
+    else:
+        print update_info
 
 else:
     file_upload = Box_File._file_upload(filename)
     if '20' in str(file_upload):
         print 'File {0} was created in Box.'.format(filename)
+    else:
+        print update_info
