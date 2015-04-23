@@ -12,7 +12,7 @@ def _refresh_token():
     refresh_token = cp.get('tokens','refresh_token').strip()
 
     url = 'https://app.box.com/api/oauth2/token'
-    refresh_data = {'grant_type':'refresh_token','refresh_token':refresh_token,'client_id':'1kz1b0qrzgx6q8a90pgk81l868eewgv3','client_secret':'9jGEKNfJjtVd1uZcey9PtvuohfEkXwLt'}
+    refresh_data = {'grant_type':'refresh_token','refresh_token':refresh_token,'client_id':'SANITIZED','client_secret':'SANITIZED'}
 
     api_key = requests.post(url,data=refresh_data)
     api_token = json.loads(api_key.text)
