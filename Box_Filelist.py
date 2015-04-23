@@ -10,4 +10,9 @@ folder_id = cp.get('folders','folder_id').strip()
 
 folder_list = _folder_list(folder_id)
 
-pp(folder_list)
+print '*******Folder Listing******'
+print 'Name\t\tID'
+print '***************************'
+for k,v in folder_list.items():
+    print '{0}\t{1}'.format(k,v)
+
