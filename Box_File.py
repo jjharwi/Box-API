@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
 from __future__ import print_function
-import requests
 import pprint
 import argparse
+
 from ConfigParser import SafeConfigParser
+import requests
+
 from Box_Refresh import _refresh_token
 from Box_Folder import _folder_list
 

@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-import Box_File
 import argparse
+
+import Box_File
 
 parser = argparse.ArgumentParser()
 parser.add_argument("filename")

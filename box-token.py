@@ -2,9 +2,10 @@
 
 from __future__ import print_function
 import json
+import time
+
 import requests
 from ConfigParser import SafeConfigParser
-import time
 
 cp = SafeConfigParser()
 cp.read('.box_config')

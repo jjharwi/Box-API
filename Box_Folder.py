@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
-import requests
 import pprint
+
+import requests
+
 from Box_Refresh import _refresh_token
 
 access_token = _refresh_token()

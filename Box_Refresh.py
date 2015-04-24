@@ -2,9 +2,10 @@
 
 from __future__ import print_function
 import json
-import requests
-from ConfigParser import SafeConfigParser
 import time
+
+from ConfigParser import SafeConfigParser
+import requests
 
 
 def _refresh_token():
