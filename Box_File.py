@@ -80,6 +80,28 @@ def _file_download(filename):
     except IOError:
         print("That file doesn't exist, try again.")
 
+def _file_delete(filename):
+    try:
+        cp = SafeConfigParser()
+        cp.read('.box_config')
+        folder_id = cp.get('folders', 'folder_id').strip()
+
+        access_token = _refresh_token()
+        headers = {"Authorization": "Bearer " + access_token}
+        folder_list = _folder_list(folder_id)
+
+        if filename in folder_list:
+            file_id = folder_list[filename][0]
+            url = 'https://api.box.com/2.0/files/{0}'.format(file_id)
+            file_delete = requests.delete(url, headers=headers)
+            if '20' in str(file_delete):
+                print("File {0} deleted.".format(filename))
+            else:
+                print("Something went wrong with that request, try again")
+        return file_delete
+
+    except IOError:
+        print("That file doesn't exist, try again.")
 
 def _file_info(file_id):
     access_token = _refresh_token()
