@@ -20,7 +20,7 @@ folder_id = cp.get('folders', 'folder_id').strip()
 folder_list = _folder_list(folder_id)
 
 if filename in folder_list:
-    file_id = folder_list[filename]
+    file_id = folder_list[filename][0]
     update_info = Box_File._file_update(filename, file_id)
     if '20' in str(update_info):
         print('File {0} was updated in Box.'.format(filename))

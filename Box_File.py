@@ -66,7 +66,7 @@ def _file_download(filename):
         folder_list = _folder_list(folder_id)
 
         if filename in folder_list:
-            file_id = folder_list[filename]
+            file_id = folder_list[filename][0]
             with open(filename, 'wb') as temp_file:
                 download_info = requests.get(
                     'https://api.box.com/2.0/files/{0}/content'.format(
