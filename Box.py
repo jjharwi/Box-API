@@ -3,13 +3,48 @@
 from __future__ import print_function
 import pprint
 import argparse
-
-from ConfigParser import SafeConfigParser
 import requests
+import json
+import time
+from ConfigParser import SafeConfigParser
 
-from Box_Refresh import _refresh_token
-from Box_Folder import _folder_list
+def _refresh_token():
 
+    cp = SafeConfigParser()
+    cp.read('.box_config')
+    try:
+        refresh_token = cp.get('tokens', 'refresh_token').strip()
+        client_id = cp.get('application', 'client_id').strip()
+        client_secret = cp.get('application', 'client_secret').strip()
+    except NoSectionError as e:
+        print("Either you are missing '.box_config' or you are missing"
+              " one of the required sections.\n{}".format(e), file=stderr)
+        exit(1)
+
+    url = 'https://app.box.com/api/oauth2/token'
+    refresh_data = {
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token,
+            'client_id': client_id, 'client_secret': client_secret}
+
+    api_key = requests.post(url, data=refresh_data)
+    api_token = json.loads(api_key.text)
+
+    access_token = api_token['access_token']
+    refresh_token = api_token['refresh_token']
+    expires_in = api_token['expires_in']
+
+    curr_time = time.strftime('%s', time.gmtime())
+    expire_time = int(curr_time) + int(expires_in)
+
+    cp.set('tokens', 'access_token', access_token)
+    cp.set('tokens', 'expire_time', str(expire_time))
+    cp.set('tokens', 'refresh_token', refresh_token)
+    fp = open('.box_config', 'w+')
+    cp.write(fp)
+    fp.close()
+
+    return access_token
 
 def _file_upload(filename):
     try:
@@ -110,6 +145,24 @@ def _file_info(file_id):
     url = 'https://api.box.com/2.0/files/{0}'.format(file_id)
     file_info = requests.get(url, headers=headers).json()
     return file_info
+
+def _folder_info():
+    url = 'https://api.box.com/2.0/folders/0'
+    folder_info = requests.get(url, headers=headers).json()
+    return folder_info
+
+def _folder_list(folder_id):
+    file_list = {}
+    access_token = _refresh_token()
+    headers = {"Authorization": "Bearer " + access_token}
+    url = 'https://api.box.com/2.0/folders/{0}/items'.format(folder_id)
+    folder_list = requests.get(url, headers=headers).json()
+    for entry in folder_list['entries']:
+        file_id = entry['id']
+        file_name = entry['name']
+        file_type = entry['type']
+        file_list[file_name] = [file_id, file_type]
+    return file_list
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

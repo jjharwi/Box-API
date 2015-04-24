@@ -1,10 +1,10 @@
 #!/usr/bin/python
 from __future__ import print_function
 
-import Box_File
+import Box
 
 file_id = '29128934794'
-file_info = Box_File._file_info(file_id)
+file_info = Box._file_info(file_id)
 
 ctime = file_info['content_created_at']
 mtime = file_info['content_modified_at']
