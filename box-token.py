@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from __future__ import print_function
+from sys import exit, stderr
 import json
 import time
 
@@ -8,7 +9,13 @@ import requests
 from ConfigParser import SafeConfigParser
 
 cp = SafeConfigParser()
-cp.read('.box_config')
+try:
+    cp.read('.box_config')
+except Exception as e:
+    print(".box_config either does not exist or is unreadable\n{}".format(e),
+          file=stderr)
+    exit(1)
+
 client_id = cp.get('application', 'client_id').strip()
 client_secret = cp.get('application', 'client_secret').strip()
 
