@@ -1,12 +1,11 @@
 #!/usr/bin/python
 
-import Box_File
 import argparse
-from ConfigParser import SafeConfigParser
+
+import Box_File
 
 parser = argparse.ArgumentParser()
 parser.add_argument("filename")
 args = parser.parse_args()
 filename = args.filename
-
-file_info = Box_File._file_download(filename)
+Box_File._file_download(filename)
