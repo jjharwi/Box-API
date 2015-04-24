@@ -23,7 +23,8 @@ def _folder_list(folder_id):
     for entry in folder_list['entries']:
         file_id = entry['id']
         file_name = entry['name']
-        file_list[file_name] = file_id
+        file_type = entry['type']
+        file_list[file_name] = [file_id, file_type]
     return file_list
 
 if __name__ == "__main__":
