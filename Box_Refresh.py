@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
 from __future__ import print_function
+from sys import exit, stderr
 import json
 import time
 
-from ConfigParser import SafeConfigParser
+
+from ConfigParser import SafeConfigParser, NoSectionError
 import requests
 
 
@@ -12,9 +14,14 @@ def _refresh_token():
 
     cp = SafeConfigParser()
     cp.read('.box_config')
-    refresh_token = cp.get('tokens', 'refresh_token').strip()
-    client_id = cp.get('application', 'client_id').strip()
-    client_secret = cp.get('application', 'client_secret').strip()
+    try:
+        refresh_token = cp.get('tokens', 'refresh_token').strip()
+        client_id = cp.get('application', 'client_id').strip()
+        client_secret = cp.get('application', 'client_secret').strip()
+    except NoSectionError as e:
+        print("Either you are missing '.box_config' or you are missing"
+              " one of the required sections.\n{}".format(e), file=stderr)
+        exit(1)
 
     url = 'https://app.box.com/api/oauth2/token'
     refresh_data = {
