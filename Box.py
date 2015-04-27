@@ -164,6 +164,38 @@ def _folder_list(folder_id):
         file_list[file_name] = [file_id, file_type]
     return file_list
 
+def _folder_create(folder_name):
+    access_token = _refresh_token()
+    headers = {"Authorization": "Bearer " + access_token}
+
+    cp = SafeConfigParser()
+    cp.read('.box_config')
+    folder_id = cp.get('folders', 'folder_id').strip()
+    folder_list = _folder_list(folder_id)
+
+    if folder_name in folder_list:
+        folder_create = 'That folder exists in Box, try again'
+
+    else:
+        url = 'https://api.box.com/2.0/folders'
+        data = json.dumps({'name': folder_name, 'parent': {'id': folder_id}})
+        folder_create = requests.post(url, headers=headers, data=data)
+
+    return folder_create
+
+#def _folder_change(folder_name):
+#    folder_list = _folder_list(folder_id)
+#    access_token = _refresh_token()
+#    headers = {"Authorization": "Bearer " + access_token}
+#
+#    cp = SafeConfigParser()
+#    cp.read('.box_config')
+#    folder_id = cp.get('folders', 'folder_id').strip()
+#
+#    if folder_name in folder_list:
+#        folder_create = 'That folder exists in Box, try again'
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("filename")
