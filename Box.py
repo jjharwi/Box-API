@@ -193,8 +193,8 @@ def _folder_change(folder_name):
     folder_list = _folder_list(folder_id)
 
     if folder_name in folder_list:
+        print('To return to your root folder, use "box_cd home"\n')
         box_folder_id = folder_list[folder_name][0]
-        print(box_folder_id)
         cp1 = SafeConfigParser()
         cp1.read('.box_config')
         cp1.set('folders','folder_id',box_folder_id)  
@@ -203,7 +203,6 @@ def _folder_change(folder_name):
         fp.close()
     elif 'home' in folder_name:
         box_folder_id = '0'
-        print(box_folder_id)
         cp1 = SafeConfigParser()
         cp1.read('.box_config')
         cp1.set('folders','folder_id',box_folder_id)  
