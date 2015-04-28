@@ -183,18 +183,35 @@ def _folder_create(folder_name):
 
     return folder_create
 
-#def _folder_change(folder_name):
-#    folder_list = _folder_list(folder_id)
-#    access_token = _refresh_token()
-#    headers = {"Authorization": "Bearer " + access_token}
-#
-#    cp = SafeConfigParser()
-#    cp.read('.box_config')
-#    folder_id = cp.get('folders', 'folder_id').strip()
-#
-#    if folder_name in folder_list:
-#        folder_create = 'That folder exists in Box, try again'
+def _folder_change(folder_name):
+    access_token = _refresh_token()
+    headers = {"Authorization": "Bearer " + access_token}
 
+    cp = SafeConfigParser()
+    cp.read('.box_config')
+    folder_id = cp.get('folders', 'folder_id').strip()
+    folder_list = _folder_list(folder_id)
+
+    if folder_name in folder_list:
+        box_folder_id = folder_list[folder_name][0]
+        print(box_folder_id)
+        cp1 = SafeConfigParser()
+        cp1.read('.box_config')
+        cp1.set('folders','folder_id',box_folder_id)  
+        fp = open('.box_config', 'w+')
+        cp1.write(fp)
+        fp.close()
+    elif 'home' in folder_name:
+        box_folder_id = '0'
+        print(box_folder_id)
+        cp1 = SafeConfigParser()
+        cp1.read('.box_config')
+        cp1.set('folders','folder_id',box_folder_id)  
+        fp = open('.box_config', 'w+')
+        cp1.write(fp)
+        fp.close()
+    else:
+        print("Folder {0} doesn't exist at this level".format(folder_name))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
