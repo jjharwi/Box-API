@@ -125,7 +125,9 @@ def _file_delete(filename):
         headers = {"Authorization": "Bearer " + access_token}
         folder_list = _folder_list(folder_id)
 
-        if filename in folder_list:
+        if filename not in folder_list:
+            file_delete = 'File not found in Box'
+        elif filename in folder_list:
             file_id = folder_list[filename][0]
             url = 'https://api.box.com/2.0/files/{0}'.format(file_id)
             file_delete = requests.delete(url, headers=headers)
