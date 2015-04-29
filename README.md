@@ -13,16 +13,16 @@ Once that is done, you can use these scripts to get information about, upload, u
 
 Box.py --
 
-  _refresh_token updates your API and refresh tokens
-  _file_upload creates a new file in your folder.
-  _file_update updates an existing file in your folder.
-  _file_download downloads a file from your folder to your local directory.
-  _file_delete deletes a file in your Box folder.
-  _file_info returns information about a file.
-  _folder_info will give you info about your folder.  
-  _folder_list will retrieve a list of files in the folder.
-  _folder_create will create a new folder in your currently selected folder.
-  _folder_change allows you to change the folder you are working in on Box.
+  refresh_token updates your API and refresh tokens
+  file_upload creates a new file in your folder.
+  file_update updates an existing file in your folder.
+  file_download downloads a file from your folder to your local directory.
+  file_delete deletes a file in your Box folder.
+  file_info returns information about a file.
+  folder_info will give you info about your folder.  
+  folder_list will retrieve a list of files in the folder.
+  folder_create will create a new folder in your currently selected folder.
+  folder_change allows you to change the folder you are working in on Box.
 
 box_cd --
 	Changes the directory you are working in on Box.
