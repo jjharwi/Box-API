@@ -9,9 +9,7 @@ Run Box_Setup.py to create the tokens section in .box_config and populate your i
  
 The _refresh_token function will then be used by the other functions here and fetch you a new set of tokens whenever needed.  
 
-At this point, if you have a particular folder you want to upload to, put it in the .box_config.  The [folders] section of the .box_config is where you need to put the folder_id for your root folder (0), or any other folder you own.  An example of how it should look is in box_config.ex
-
-Once that is done, you can use these scripts to get information, upload, and update files in Box from the command line.
+Once that is done, you can use these scripts to get information about, upload, update, and download files in Box from the command line.
 
 Box.py --
 
@@ -23,12 +21,29 @@ Box.py --
   _file_info returns information about a file.
   _folder_info will give you info about your folder.  
   _folder_list will retrieve a list of files in the folder.
+  _folder_create will create a new folder in your currently selected folder.
+  _folder_change allows you to change the folder you are working in on Box.
 
-Box_Folderlist.py --
+box_cd --
+	Changes the directory you are working in on Box.
+
+box_download --
+	Downloads the named file from Box.
+
+box_info --
+	Information about a file in Box.
+
+box_ls --
 	Lists files in the Box folder.
 
-Box_Fileinfo.py --
-	Information about a file in Box
+box_mkdir --
+	Creates a new folder in the Box folder.
+
+box_rm --
+	Deletes a file in Box.
+
+box_upload --
+	Creates a file in Box.  If the file exists, uploads a new version.
 
 Box_Setup.py --
 	Retrieves the initial access and refresh tokens after you authorize the application via RSA.
