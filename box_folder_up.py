@@ -11,5 +11,4 @@ folder_name = args.folder_name
 
 for file in os.listdir(folder_name):
     filename = folder_name + '/' + file
-    if file.endswith(".txt"):
-        Box._file_update(filename)
+    Box._file_update(filename)
