@@ -11,7 +11,7 @@ The _refresh_token function will then be used by the other functions here and fe
 
 Once that is done, you can use these scripts to get information about, upload, update, and download files in Box from the command line.
 
-Box.py --
+Box.py
 _refresh_token updates your API and refresh tokens.
 _file_upload creates a new file in your folder.
 _file_update updates an existing file in your folder.
@@ -23,26 +23,26 @@ _folder_list will retrieve a list of files in the folder.
 _folder_create will create a new folder in your currently selected folder.
 _folder_change allows you to change the folder you are working in on Box.
 
-box_cd --
+box_cd 
 	Changes the directory you are working in on Box.
 
-box_down --
+box_down
 	Downloads the named file from Box.
 
-box_info --
+box_info
 	Information about a file in Box.
 
-box_ls --
+box_ls
 	Lists files in the Box folder.
 
-box_mkdir --
+box_mkdir
 	Creates a new folder in the Box folder.
 
-box_rm --
+box_rm
 	Deletes a file in Box.
 
-box_up --
+box_up
 	Creates a file in Box.  If the file exists, uploads a new version.
 
-Box_Setup.py --
+Box_Setup.py
 	Retrieves the initial access and refresh tokens after you authorize the application via RSA.
