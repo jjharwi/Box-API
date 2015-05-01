@@ -78,7 +78,6 @@ def _file_update(filename):
 
         folder_list = _folder_list(folder_id)
         box_filename = filename.split('/')[-1]
-        print(box_filename)
 
         if box_filename in folder_list:
             file_id = folder_list[box_filename][0]
