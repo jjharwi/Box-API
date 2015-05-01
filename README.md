@@ -1,7 +1,12 @@
 Box-API
 =======
 
-Scripts and documentation for interacting with the Box API
+Box Sync doesn't work on Linux, and it doesn't lend itself to automation, so I created this CLI to Box.  With it, you can download, upload, delete, and create directories, as well as pull information about files via the Box API. 
+
+Requirements:
+Box access
+python 2.6
+requests library
 
 To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
 
