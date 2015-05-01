@@ -12,3 +12,4 @@ folder_name = args.folder_name
 for file in os.listdir(folder_name):
     filename = folder_name + '/' + file
     Box._file_update(filename)
+    os.remove(filename)

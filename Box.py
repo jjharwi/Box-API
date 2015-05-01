@@ -61,6 +61,10 @@ def _file_upload(filename):
 
         upload_info = requests.post(url, files=files, headers=headers,
                                     data=data)
+
+        if '20' not in str(upload_info):
+            print('Something went wrong with that request')
+
         return upload_info
 
     except IOError:
@@ -152,7 +156,17 @@ def _file_delete(filename):
     except IOError:
         print("That file doesn't exist, try again.")
 
-def _file_info(file_id):
+def _file_info(filename):
+    cp = SafeConfigParser()
+    cp.read('.box_config')
+    folder_id = cp.get('folders', 'folder_id').strip()
+
+    folder_list = _folder_list(folder_id)
+    if filename not in folder_list:
+        file_info = 'File not found in Box'
+    elif filename in folder_list:
+        file_id = folder_list[filename][0]
+
     access_token = _refresh_token()
     headers = {"Authorization": "Bearer " + access_token}
 
