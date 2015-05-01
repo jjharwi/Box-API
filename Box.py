@@ -46,13 +46,19 @@ def _refresh_token():
 
     return access_token
 
+def _get_folder_id():
+    cp = SafeConfigParser()
+    cp.read('.box_config')
+    folder_id = cp.get('folders', 'folder_id').strip()
+
+    return folder_id
+
 def _file_upload(filename):
     try:
-        cp = SafeConfigParser()
-        cp.read('.box_config')
-        folder_id = cp.get('folders', 'folder_id').strip()
-        access_token = _refresh_token()
 
+        folder_id = _get_folder_id()
+
+        access_token = _refresh_token()
         headers = {"Authorization": "Bearer " + access_token}
 
         data = {"name": "filename", "folder_id": folder_id}
@@ -73,14 +79,13 @@ def _file_upload(filename):
 
 def _file_update(filename):
     try:
-        cp = SafeConfigParser()
-        cp.read('.box_config')
-        folder_id = cp.get('folders', 'folder_id').strip()
-        access_token = _refresh_token()
 
+        folder_id = _get_folder_id()
+        folder_list = _folder_list(folder_id)
+
+        access_token = _refresh_token()
         headers = {"Authorization": "Bearer " + access_token}
 
-        folder_list = _folder_list(folder_id)
         box_filename = filename.split('/')[-1]
 
         if box_filename in folder_list:
@@ -107,14 +112,12 @@ def _file_update(filename):
 
 def _file_download(filename):
     try:
-        cp = SafeConfigParser()
-        cp.read('.box_config')
-        folder_id = cp.get('folders', 'folder_id').strip()
-        access_token = _refresh_token()
 
-        headers = {"Authorization": "Bearer " + access_token}
-
+        folder_id = _get_folder_id()
         folder_list = _folder_list(folder_id)
+
+        access_token = _refresh_token()
+        headers = {"Authorization": "Bearer " + access_token}
 
         if filename in folder_list:
             file_id = folder_list[filename][0]
@@ -133,13 +136,12 @@ def _file_download(filename):
 
 def _file_delete(filename):
     try:
-        cp = SafeConfigParser()
-        cp.read('.box_config')
-        folder_id = cp.get('folders', 'folder_id').strip()
+
+        folder_id = _get_folder_id()
+        folder_list = _folder_list(folder_id)
 
         access_token = _refresh_token()
         headers = {"Authorization": "Bearer " + access_token}
-        folder_list = _folder_list(folder_id)
 
         if filename not in folder_list:
             file_delete = 'File not found in Box'
@@ -157,32 +159,45 @@ def _file_delete(filename):
         print("That file doesn't exist, try again.")
 
 def _file_info(filename):
-    cp = SafeConfigParser()
-    cp.read('.box_config')
-    folder_id = cp.get('folders', 'folder_id').strip()
 
+    folder_id = _get_folder_id()
     folder_list = _folder_list(folder_id)
-    if filename not in folder_list:
-        file_info = 'File not found in Box'
-    elif filename in folder_list:
-        file_id = folder_list[filename][0]
 
     access_token = _refresh_token()
     headers = {"Authorization": "Bearer " + access_token}
 
-    url = 'https://api.box.com/2.0/files/{0}'.format(file_id)
-    file_info = requests.get(url, headers=headers).json()
+    if filename not in folder_list:
+        file_info = '404: File not found in Box'
+    elif filename in folder_list:
+        file_id = folder_list[filename][0]
+        url = 'https://api.box.com/2.0/files/{0}'.format(file_id)
+        file_info = requests.get(url, headers=headers).json()
+
     return file_info
 
-def _folder_info():
-    url = 'https://api.box.com/2.0/folders/0'
+def _folder_info(folder_name):
+
+    folder_id =_get_folder_id()
+
+    access_token = _refresh_token()
+    headers = {"Authorization": "Bearer " + access_token}
+
+    folder_list = _folder_list(folder_id)
+    if folder_name in folder_list:
+        folder_id = folder_list[folder_name][0]
+    else:
+        folder_id = 0
+
+    url = 'https://api.box.com/2.0/folders/{0}'.format(folder_id)
     folder_info = requests.get(url, headers=headers).json()
     return folder_info
 
 def _folder_list(folder_id):
+
     file_list = {}
     access_token = _refresh_token()
     headers = {"Authorization": "Bearer " + access_token}
+
     url = 'https://api.box.com/2.0/folders/{0}/items'.format(folder_id)
     folder_list = requests.get(url, headers=headers).json()
     for entry in folder_list['entries']:
@@ -193,13 +208,12 @@ def _folder_list(folder_id):
     return file_list
 
 def _folder_create(folder_name):
+
+    folder_id = _get_folder_id()
+    folder_list = _folder_list(folder_id)
+
     access_token = _refresh_token()
     headers = {"Authorization": "Bearer " + access_token}
-
-    cp = SafeConfigParser()
-    cp.read('.box_config')
-    folder_id = cp.get('folders', 'folder_id').strip()
-    folder_list = _folder_list(folder_id)
 
     if folder_name in folder_list:
         folder_create = 'That folder exists in Box, try again'
@@ -212,13 +226,12 @@ def _folder_create(folder_name):
     return folder_create
 
 def _folder_change(folder_name):
+
+    folder_id = _get_folder_id()
+    folder_list = _folder_list(folder_id)
+
     access_token = _refresh_token()
     headers = {"Authorization": "Bearer " + access_token}
-
-    cp = SafeConfigParser()
-    cp.read('.box_config')
-    folder_id = cp.get('folders', 'folder_id').strip()
-    folder_list = _folder_list(folder_id)
 
     if folder_name in folder_list:
         print('To return to your root folder, use "box_cd home"\n')
