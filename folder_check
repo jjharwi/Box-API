@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+import os
+
+for file in os.listdir("uploads"):
+    if file.endswith(".txt"):
+        print(file)

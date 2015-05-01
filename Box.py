@@ -67,7 +67,7 @@ def _file_upload(filename):
         print("That file doesn't exist locally, try again.")
 
 
-def _file_update(filename, file_id):
+def _file_update(filename):
     try:
         cp = SafeConfigParser()
         cp.read('.box_config')
@@ -76,13 +76,24 @@ def _file_update(filename, file_id):
 
         headers = {"Authorization": "Bearer " + access_token}
 
-        data = {"name": "filename", "folder_id": folder_id}
-        files = {'filename': (filename, open(filename, 'rb'))}
-        url = 'https://upload.box.com/api/2.0/files/{0}/content'.format(
-            file_id)
+        folder_list = _folder_list(folder_id)
 
-        update_info = requests.post(url, files=files, headers=headers,
-                                    data=data)
+        if filename in folder_list:
+            file_id = folder_list[filename][0]
+            data = {"name": "filename", "folder_id": folder_id}
+            files = {'filename': (filename, open(filename, 'rb'))}
+            url = 'https://upload.box.com/api/2.0/files/{0}/content'.format(
+                file_id)
+
+            update_info = requests.post(url, files=files, headers=headers,
+                                        data=data)
+
+            if '20' not in str(update_info):
+                print('Something went wrong with that request')
+
+        else:
+            update_info =_file_upload(filename)
+
         return update_info
 
     except IOError:
