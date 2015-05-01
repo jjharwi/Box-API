@@ -3,7 +3,7 @@ Box-API
 
 Scripts and documentation for interacting with the Box API
 
-To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created (hint: https://racker.app.box.com/developers/services/edit/), put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
+To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
 
 Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  It will present you with the proper URL to access your application, just open the URL and authenticate with your RSA token (use the Single Sign On link).  Then, click the "Grant access to Box" button. You will be presented with a URL in your browser that has "code=LONGSTRINGOFSTUFF" at the end.  Copy/paste the LONGSTRINGOFSTUFF into the script.  
  
