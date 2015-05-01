@@ -1,7 +1,16 @@
 #!/usr/bin/env python
 
 import os
+import argparse
+import Box
 
-for file in os.listdir("uploads"):
+parser = argparse.ArgumentParser()
+parser.add_argument("folder_name")
+args = parser.parse_args()
+folder_name = args.folder_name
+
+os.chdir(folder_name)
+for file in os.listdir("."):
     if file.endswith(".txt"):
         print(file)
+        Box._file_update(file)

@@ -77,11 +77,13 @@ def _file_update(filename):
         headers = {"Authorization": "Bearer " + access_token}
 
         folder_list = _folder_list(folder_id)
+        box_filename = filename.split('/')[-1]
+        print(box_filename)
 
-        if filename in folder_list:
-            file_id = folder_list[filename][0]
+        if box_filename in folder_list:
+            file_id = folder_list[box_filename][0]
             data = {"name": "filename", "folder_id": folder_id}
-            files = {'filename': (filename, open(filename, 'rb'))}
+            files = {'filename': (box_filename, open(filename, 'rb'))}
             url = 'https://upload.box.com/api/2.0/files/{0}/content'.format(
                 file_id)
 
