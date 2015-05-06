@@ -32,13 +32,8 @@ def _refresh_token():
 
     access_token = api_token['access_token']
     refresh_token = api_token['refresh_token']
-    #expires_in = api_token['expires_in']
-
-    #curr_time = time.strftime('%s', time.gmtime())
-    #expire_time = int(curr_time) + int(expires_in)
 
     cp.set('tokens', 'access_token', access_token)
-    #cp.set('tokens', 'expire_time', str(expire_time))
     cp.set('tokens', 'refresh_token', refresh_token)
     fp = open('.box_config', 'w+')
     cp.write(fp)
