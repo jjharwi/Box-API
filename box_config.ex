@@ -5,12 +5,3 @@
 [application]
 client_id = SANITIZED
 client_secret = SANITIZED
-
-#After running box-token
-[tokens]
-access_token = SANITIZED
-expire_time = SANITIZED
-refresh_token = SANITIZED
-
-[folders]
-folder_id = SOME_BOX_FOLDER_YOU_OWN i.e. 2563578
