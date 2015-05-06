@@ -38,6 +38,8 @@ _folder_create will create a new folder in your currently selected folder.
 
 _folder_change allows you to change the folder you are working in on Box.
 
+_folder_delete deletes a folder (RECURSIVELY, know what you're deleting).
+
 box_cd 
 	Changes the directory you are working in on Box.
 
@@ -50,14 +52,23 @@ box_info
 box_ls
 	Lists files in the Box folder.
 
-box_mkdir
-	Creates a new folder in the Box folder.
-
 box_rm
 	Deletes a file in Box.
 
 box_up
 	Creates a file in Box.  If the file exists, uploads a new version.
+
+box_mkdir
+	Creates a new folder in the Box folder.
+
+box_folder_up
+	Uploads the contents of a local folder to the current Box folder.
+
+box_folder_rm
+	Deletes an existing Box folder.
+
+box_folder_info
+	Retrieves information about a named folder.
 
 Box_Setup.py
 	Retrieves the initial access and refresh tokens after you authorize the application via RSA.
