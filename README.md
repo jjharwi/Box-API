@@ -3,9 +3,12 @@ Box-API
 
 Box Sync doesn't work on Linux, and it doesn't lend itself to automation, so I created this CLI to Box.  With it, you can download, upload, delete, and create directories, as well as pull information about files via the Box API. 
 
-Requirements:
+Requirements
+
 Box access
-python 2.6
+
+python 
+
 requests library
 
 To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
@@ -40,35 +43,37 @@ _folder_change allows you to change the folder you are working in on Box.
 
 _folder_delete deletes a folder (RECURSIVELY, know what you're deleting).
 
+COMMANDS:
+
 box_cd 
-	Changes the directory you are working in on Box.
+Changes the directory you are working in on Box.
 
 box_down
-	Downloads the named file from Box.
+Downloads the named file from Box.
 
 box_info
-	Information about a file in Box.
+Information about a file in Box.
 
 box_ls
-	Lists files in the Box folder.
+Lists files in the Box folder.
 
 box_rm
-	Deletes a file in Box.
+Deletes a file in Box.
 
 box_up
-	Creates a file in Box.  If the file exists, uploads a new version.
+Creates a file in Box.  If the file exists, uploads a new version.
 
 box_mkdir
-	Creates a new folder in the Box folder.
+Creates a new folder in the Box folder.
 
 box_folder_up
-	Uploads the contents of a local folder to the current Box folder.
+Uploads the contents of a local folder to the current Box folder.
 
 box_folder_rm
-	Deletes an existing Box folder.
+Deletes an existing Box folder.
 
 box_folder_info
-	Retrieves information about a named folder.
+Retrieves information about a named folder.
 
 Box_Setup.py
-	Retrieves the initial access and refresh tokens after you authorize the application via RSA.
+Retrieves the initial access and refresh tokens after you authorize the application via RSA.
