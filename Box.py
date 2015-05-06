@@ -262,17 +262,16 @@ def _folder_delete(folder_name):
     headers = {"Authorization": "Bearer " + access_token}
 
     if folder_name not in folder_list:
-        file_delete = 'Folder not found in Box'
+        folder_to_delete = 'Folder not found in Box'
     elif folder_name in folder_list:
-        folder_id = folder_list[folder_name][0]
-        print(folder_id)
-        #url = 'https://api.box.com/2.0/folders/{0}?recursive=true'.format(file_id)
-        #folder_delete = requests.delete(url, headers=headers)
-        #if '20' in str(file_delete):
-        #    print("Folder {0} deleted.".format(filename))
-        else:
-            print("Something went wrong with that request, try again")
-    return folder_delete
+        folder_to_delete = folder_list[folder_name][0]
+        url = 'https://api.box.com/2.0/folders/{0}?recursive=true'.format(folder_to_delete)
+        folder_to_delete = requests.delete(url, headers=headers)
+        if '20' in str(folder_to_delete):
+            print("Folder {0} deleted.".format(folder_name))
+    else:
+        print("Something went wrong with that request, try again")
+    return folder_to_delete
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
