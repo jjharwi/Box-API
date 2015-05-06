@@ -11,15 +11,17 @@ python
 
 requests library
 
-To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config.
+To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config (an example is provided in box_config.ex).
 
-Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  It will present you with the proper URL to access your application, just open the URL and authenticate with your RSA token (use the Single Sign On link).  Then, click the "Grant access to Box" button. You will be presented with a URL in your browser that has "code=LONGSTRINGOFSTUFF" at the end.  Copy/paste the LONGSTRINGOFSTUFF into the script.  
+Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  
+
+Run the script, and it will present you with the proper URL to access your application, just open the URL and authenticate with your RSA token (use the Single Sign On link).  Then, click the "Grant access to Box" button. You will be presented with a URL in your browser that has "code=LONGSTRINGOFSTUFF" at the end.  Copy/paste the LONGSTRINGOFSTUFF into the script.  
  
 The _refresh_token function will then be used by the other functions here and fetch you a new set of tokens whenever needed.  
 
 Once that is done, you can use these scripts to get information about, upload, update, and download files in Box from the command line.
 
-Box.py
+Box.py functions
 
 _refresh_token updates your API and refresh tokens.
 
