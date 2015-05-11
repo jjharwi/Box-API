@@ -188,19 +188,29 @@ def _folder_info(folder_name):
     return folder_info
 
 def _folder_list(folder_id):
+    try:
+        file_list = {}
+        access_token = _refresh_token()
+        headers = {"Authorization": "Bearer " + access_token}
 
-    file_list = {}
-    access_token = _refresh_token()
-    headers = {"Authorization": "Bearer " + access_token}
+        url = 'https://api.box.com/2.0/folders/{0}/items'.format(folder_id)
+        folder_list = requests.get(url, headers=headers).json()
+        for entry in folder_list['entries']:
+            file_id = entry['id']
+            file_name = entry['name']
+            file_type = entry['type']
+            file_list[file_name] = [file_id, file_type]
+        return file_list
 
-    url = 'https://api.box.com/2.0/folders/{0}/items'.format(folder_id)
-    folder_list = requests.get(url, headers=headers).json()
-    for entry in folder_list['entries']:
-        file_id = entry['id']
-        file_name = entry['name']
-        file_type = entry['type']
-        file_list[file_name] = [file_id, file_type]
-    return file_list
+    except KeyError:
+        box_folder_id = '0'
+        cp1 = SafeConfigParser()
+        cp1.read('.box_config')
+        cp1.set('folders','folder_id',box_folder_id)
+        fp = open('.box_config', 'w+')
+        cp1.write(fp)
+        fp.close()
+        print("The folder in .box_config doesn't exist, returning home...")
 
 def _folder_create(folder_name):
 
@@ -221,32 +231,41 @@ def _folder_create(folder_name):
     return folder_create
 
 def _folder_change(folder_name):
+    try:
+        folder_id = _get_folder_id()
+        folder_list = _folder_list(folder_id)
 
-    folder_id = _get_folder_id()
-    folder_list = _folder_list(folder_id)
+        access_token = _refresh_token()
+        headers = {"Authorization": "Bearer " + access_token}
 
-    access_token = _refresh_token()
-    headers = {"Authorization": "Bearer " + access_token}
-
-    if folder_name in folder_list:
-        print('To return to your root folder, use "box_cd home"\n')
-        box_folder_id = folder_list[folder_name][0]
-        cp1 = SafeConfigParser()
-        cp1.read('.box_config')
-        cp1.set('folders','folder_id',box_folder_id)  
-        fp = open('.box_config', 'w+')
-        cp1.write(fp)
-        fp.close()
-    elif 'home' in folder_name:
+        if folder_name in folder_list:
+            print('To return to your root folder, use "box_cd home"\n')
+            box_folder_id = folder_list[folder_name][0]
+            cp1 = SafeConfigParser()
+            cp1.read('.box_config')
+            cp1.set('folders','folder_id',box_folder_id)  
+            fp = open('.box_config', 'w+')
+            cp1.write(fp)
+            fp.close()
+        elif 'home' in folder_name:
+            box_folder_id = '0'
+            cp1 = SafeConfigParser()
+            cp1.read('.box_config')
+            cp1.set('folders','folder_id',box_folder_id)  
+            fp = open('.box_config', 'w+')
+            cp1.write(fp)
+            fp.close()
+        else:
+            print("Folder {0} doesn't exist at this level".format(folder_name))
+    except KeyError:
         box_folder_id = '0'
         cp1 = SafeConfigParser()
         cp1.read('.box_config')
-        cp1.set('folders','folder_id',box_folder_id)  
+        cp1.set('folders','folder_id',box_folder_id)
         fp = open('.box_config', 'w+')
         cp1.write(fp)
         fp.close()
-    else:
-        print("Folder {0} doesn't exist at this level".format(folder_name))
+        print("The folder in .box_config doesn't exist, returning home...")
 
 def _folder_delete(folder_name):
 

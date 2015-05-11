@@ -69,7 +69,7 @@ box_mkdir
 Creates a new folder in the Box folder.
 
 box_folder_up
-Uploads the contents of a local folder to the current Box folder.
+Creates a new folder in the current Box folder and uploads the contents of a local folder to the new Box folder.
 
 box_folder_rm
 Deletes an existing Box folder.
