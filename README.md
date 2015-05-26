@@ -48,7 +48,7 @@ _folder_delete deletes a folder (RECURSIVELY, know what you're deleting).
 COMMANDS:
 
 box_cd 
-Changes the directory you are working in on Box.
+Changes the directory you are working in on Box.  Hint:  use "box_cd home" to return to your 0 level directory.
 
 box_down
 Downloads the named file from Box.
