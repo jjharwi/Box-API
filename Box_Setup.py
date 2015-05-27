@@ -4,13 +4,15 @@ from __future__ import print_function
 from sys import exit, stderr
 import json
 import time
-
+import os
 import requests
 from ConfigParser import SafeConfigParser
 
+conf_file = os.path.expanduser('~/.box_config')
+
 cp = SafeConfigParser()
 try:
-    cp.read('.box_config')
+    cp.read(conf_file)
 except Exception as e:
     print(".box_config either does not exist or is unreadable\n{}".format(e),
           file=stderr)
@@ -50,7 +52,7 @@ cp.set('tokens', 'expire_time', str(expire_time))
 cp.set('tokens', 'refresh_token', refresh_token)
 cp.add_section('folders')
 cp.set('folders', 'folder_id', '0')
-fp = open('.box_config', 'a')
+fp = open(conf_file, 'a')
 cp.write(fp)
 fp.close()
 

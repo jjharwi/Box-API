@@ -3,21 +3,24 @@
 from __future__ import print_function
 import pprint
 import argparse
+import os
 import requests
 import json
 import time
 from ConfigParser import SafeConfigParser
 
+conf_file = os.path.expanduser('~/.box_config')
+
 def _refresh_token():
 
     cp = SafeConfigParser()
-    cp.read('.box_config')
+    cp.read(conf_file)
     try:
         refresh_token = cp.get('tokens', 'refresh_token').strip()
         client_id = cp.get('application', 'client_id').strip()
         client_secret = cp.get('application', 'client_secret').strip()
     except NoSectionError as e:
-        print("Either you are missing '.box_config' or you are missing"
+        print("Either you are missing conf_file or you are missing"
               " one of the required sections.\n{}".format(e), file=stderr)
         exit(1)
 
@@ -35,7 +38,7 @@ def _refresh_token():
 
     cp.set('tokens', 'access_token', access_token)
     cp.set('tokens', 'refresh_token', refresh_token)
-    fp = open('.box_config', 'w+')
+    fp = open(conf_file, 'w+')
     cp.write(fp)
     fp.close()
 
@@ -43,7 +46,7 @@ def _refresh_token():
 
 def _get_folder_id():
     cp = SafeConfigParser()
-    cp.read('.box_config')
+    cp.read(conf_file)
     folder_id = cp.get('folders', 'folder_id').strip()
 
     return folder_id
@@ -205,9 +208,9 @@ def _folder_list(folder_id):
     except KeyError:
         box_folder_id = '0'
         cp1 = SafeConfigParser()
-        cp1.read('.box_config')
+        cp1.read(conf_file)
         cp1.set('folders','folder_id',box_folder_id)
-        fp = open('.box_config', 'w+')
+        fp = open(conf_file, 'w+')
         cp1.write(fp)
         fp.close()
         print("The folder in .box_config doesn't exist, returning home...")
@@ -242,17 +245,17 @@ def _folder_change(folder_name):
             print('To return to your root folder, use "box_cd home"\n')
             box_folder_id = folder_list[folder_name][0]
             cp1 = SafeConfigParser()
-            cp1.read('.box_config')
+            cp1.read(conf_file)
             cp1.set('folders','folder_id',box_folder_id)  
-            fp = open('.box_config', 'w+')
+            fp = open(conf_file, 'w+')
             cp1.write(fp)
             fp.close()
         elif 'home' in folder_name:
             box_folder_id = '0'
             cp1 = SafeConfigParser()
-            cp1.read('.box_config')
+            cp1.read(conf_file)
             cp1.set('folders','folder_id',box_folder_id)  
-            fp = open('.box_config', 'w+')
+            fp = open(conf_file, 'w+')
             cp1.write(fp)
             fp.close()
         else:
@@ -260,9 +263,9 @@ def _folder_change(folder_name):
     except KeyError:
         box_folder_id = '0'
         cp1 = SafeConfigParser()
-        cp1.read('.box_config')
+        cp1.read(conf_file)
         cp1.set('folders','folder_id',box_folder_id)
-        fp = open('.box_config', 'w+')
+        fp = open(conf_file, 'w+')
         cp1.write(fp)
         fp.close()
         print("The folder in .box_config doesn't exist, returning home...")

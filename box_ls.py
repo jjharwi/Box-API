@@ -4,12 +4,9 @@ from __future__ import print_function
 
 from ConfigParser import SafeConfigParser
 
-from Box import _folder_list
+from Box import _folder_list, _get_folder_id
 
-cp = SafeConfigParser()
-cp.read('.box_config')
-folder_id = cp.get('folders', 'folder_id').strip()
-
+folder_id = _get_folder_id()
 folder_list = _folder_list(folder_id)
 
 try:
