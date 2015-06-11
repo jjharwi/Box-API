@@ -13,7 +13,7 @@ requests library
 
 To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in ~/.box_config (an example is provided in box_config.ex).  Ensure .box_config is in your home directory.
 
-Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  
+Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  If Box_Setup gives you a NoSection error, you probably don't have .box_config in your home directory.  Put it there.  
 
 Run the script, and it will present you with the proper URL to access your application, just open the URL and authenticate with your RSA token (use the Single Sign On link).  Then, click the "Grant access to Box" button. You will be presented with a URL in your browser that has "code=LONGSTRINGOFSTUFF" at the end.  Copy/paste the LONGSTRINGOFSTUFF into the script.  
  
