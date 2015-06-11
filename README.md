@@ -11,7 +11,7 @@ python
 
 requests library
 
-To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in .box_config (an example is provided in box_config.ex).
+To use the API, first check out https://developers.box.com and follow directions on how to create an application.  Once you've got an application created, put "http://0.0.0.0/" in the redirect_uri field, and grab the client_id and client_secret to put them in ~/.box_config (an example is provided in box_config.ex).  Ensure .box_config is in your home directory.
 
 Run Box_Setup.py to create the tokens section in .box_config and populate your initial access and refresh tokens.  
 
@@ -80,4 +80,4 @@ Retrieves information about a named folder.
 Box_Setup.py
 Retrieves the initial access and refresh tokens after you authorize the application via RSA.
 
-test
+You can add this folder to your path, or put symlinks in somewhere already in your path for box_ls -> ~/Box-API/box_ls.py, box_cd -> ~/Box-API/box_cd.py, etc.  
